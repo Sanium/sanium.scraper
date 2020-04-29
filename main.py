@@ -34,9 +34,9 @@ while key != 'q':
         #       "Płaca:", x.find_element_by_class_name('css-1dotj4s').text, "\n",#element znaleziony po nazwie klasy
         #       "Status:", x.find_element_by_class_name('css-hw5uoy').text, "\n==========")#element znaleziony po nazwie klasy
 
-    root.send_keys(Keys.PAGE_DOWN)
-    driver.implicitly_wait(5)
-    # key = input("Press q to quit: ")
+    # root.send_keys(Keys.PAGE_DOWN)#TODO: wywołanie scrollowania
+    # driver.implicitly_wait(5)
+    key = input("Press q to quit: ")
 
 json = json.dumps(output)
 f = open("dict.json", "w")
