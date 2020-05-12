@@ -10,7 +10,7 @@ from Scraper import Scraper
 
 def main():
     scraper = Scraper()
-    scraper.run("https://justjoin.it/", 100)  # działa tylko dla justjoin.it ;)
+    scraper.run("https://justjoin.it/", 100)
 
 
 if __name__ == "__main__":
