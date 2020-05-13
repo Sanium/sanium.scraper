@@ -2,15 +2,34 @@ import os
 
 from flask import Flask
 from app.models import db
+from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 
-# create and configure the app
+
+class Config(object):
+    SECRET_KEY = 'dev',
+
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///sanium.db'
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    SCHEDULER_JOBSTORES = {
+        'default': SQLAlchemyJobStore(url='sqlite:///app/sanium.db')
+    }
+
+    SCHEDULER_EXECUTORS = {
+        'default': {'type': 'threadpool', 'max_workers': 20}
+    }
+
+    SCHEDULER_JOB_DEFAULTS = {
+        'coalesce': False,
+        'max_instances': 3
+    }
+
+    SCHEDULER_API_ENABLED = True
+
+
 app = Flask(__name__, instance_relative_config=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sanium.db'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config.from_mapping(
-    SECRET_KEY='dev',
-    DATABASE=os.path.join(app.instance_path, 'app.sqlite'),
-)
+app.config.from_object(Config())
 
 db.init_app(app)
 

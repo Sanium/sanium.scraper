@@ -1,2 +1,6 @@
+from .SchedulerService import scheduler
+
+
 def init_app(app):
-    pass
+    scheduler.init_app(app)
+    scheduler.start()
