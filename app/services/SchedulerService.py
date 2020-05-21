@@ -5,4 +5,5 @@ scheduler = APScheduler()
 
 @scheduler.task('interval', id='do_job_1', seconds=3)
 def job1():
-    print('Job 1 executed')
+    # print('Job 1 executed')
+    pass
