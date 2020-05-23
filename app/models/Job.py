@@ -10,17 +10,26 @@ class Job(db.Model):
     run_date = db.Column(db.TIMESTAMP, nullable=False)
     created = db.Column(db.TIMESTAMP, nullable=False)
 
-    SCHEDULED = 1
-    RUNNING = 2
-    DONE = 3
+    SCHEDULED = 'scheduled'
+    RUNNING = 'running'
+    DONE = 'done'
 
     def __repr__(self):
         return f"<Job(id={self.id}, name={self.name}, status={self.status}, " \
                f"run_date={self.run_date}, created={self.created})>"
 
-    def print(self):
-        return f"<Job(id={self.id}, name={self.name}, status={self.status}, " \
-               f"run_date={self.run_date}, created={self.created})>"
+    def __str__(self):
+        return f"Job: {self.id}, {self.name}, {self.status}, " \
+               f"{self.run_date}, {self.created}"
+
+    def dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'status': self.status,
+            'run_date': self.run_date,
+            'created': self.created,
+        }
 
     def set_status(self, status):
         self.status = status
@@ -36,3 +45,7 @@ class Job(db.Model):
     @staticmethod
     def find(idx):
         return db.session.query(Job).filter(Job.id == idx).first()
+
+    @staticmethod
+    def all():
+        return db.session.query(Job).all()

@@ -1,6 +1,5 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint, jsonify
 from app.services.SchedulerService import scheduler, create_task, test_job
-from datetime import datetime, timedelta
 from app.models.Job import Job
 
 bp = Blueprint('index', __name__)
@@ -13,38 +12,36 @@ def index():
 
 @bp.route('/jobs')
 def print_jobs():
-    jobs = scheduler.get_jobs()
-    return make_response(f"{len(jobs)} jobs", 200)
+    jobs = Job.all()
+    data = {}
+    for j in jobs:
+        data[j.id] = j.dict()
+        pass
+    return jsonify(data=data)
 
 
 @bp.route('/add')
 def add_job():
     t = create_task(name='test_job', func=test_job, seconds=15)
-    return make_response(f"Job {t.id} added. Execution scheduled time: {t.run_date}", 200)
+    return jsonify(data=f"Job {t.id} added. Execution scheduled time: {t.run_date}")
 
 
 @bp.route('/pause')
 def pause():
     scheduler.pause()
-    return make_response("Paused", 200)
+    return jsonify(data="Paused")
 
 
 @bp.route('/resume')
 def resume():
     scheduler.resume()
-    return make_response("Resumed", 200)
+    return jsonify(data="Resumed")
 
 
-@bp.route('/job/<idx>')
+@bp.route('/jobs/<idx>')
 def job(idx):
-    t = Job.find(idx)
-    if t is None:
-        return make_response("Not Found", 404)
-    return jsonify({
-        'id': t.id,
-        'name': t.name,
-        'status': t.status,
-        'run_date': t.run_date,
-        'created': t.created,
-    })
+    j = Job.find(idx)
+    if j is None:
+        return jsonify(error="Not Found"), 404
+    return jsonify(data=j.dict())
 
