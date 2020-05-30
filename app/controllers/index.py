@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
-from app.services.SchedulerService import scheduler, create_task, test_job
+from app.services.SchedulerService import scheduler, create_job
+from app.services.ScraperService import main_page_job
 from app.models.Job import Job
 
 bp = Blueprint('index', __name__)
@@ -22,7 +23,7 @@ def print_jobs():
 
 @bp.route('/add')
 def add_job():
-    t = create_task(name='test_job', func=test_job, seconds=15)
+    t = create_job(name='main_page_job', func=main_page_job, seconds=15)
     return jsonify(data=f"Job {t.id} added. Execution scheduled time: {t.run_date}")
 
 

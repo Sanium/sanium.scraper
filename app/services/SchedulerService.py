@@ -6,13 +6,15 @@ from time import sleep
 scheduler = APScheduler()
 
 
-def create_task(name, func, args=None, seconds=0, minutes=0):
+def create_job(name, func, args=None, seconds=0, minutes=0):
     run_date = datetime.now() + timedelta(seconds=seconds, minutes=minutes)
 
     job = Job.create(name=name, run_date=run_date)
 
     if args is None:
         args = [job.id]
+    else:
+        args.insert(0, job.id)
 
     scheduler.add_job(id=str(job.id), func=func, args=args, trigger='date', run_date=run_date)
 
