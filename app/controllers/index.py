@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from app.services.SchedulerService import scheduler, create_job
-from app.services.ScraperService import main_page_job
+from app.ScraperService.__init__ import main_page_job
 from app.models.Job import Job
 
 bp = Blueprint('index', __name__)

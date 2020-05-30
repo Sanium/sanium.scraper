@@ -1,9 +1,11 @@
-from Scraper import Scraper
+from app.ScraperService.Scraper import Scraper
 
 
 def main():
     scraper = Scraper()
-    scraper.run("https://justjoin.it/", 10)
+    scraper.run_main_page_scrapping("https://justjoin.it/", 5)
+    scraper.run_detail_page_scrapping()
+    scraper.save_data()
 
 
 if __name__ == "__main__":
