@@ -58,9 +58,9 @@ class MainPage:
                         else:
                             output[x.get_attribute("href").__str__().replace('https://justjoin.it/offers/', '')] = {
                                 'title': find(x, MainPageLocators.OFFER_TITLE),
-                                'info': find(x, MainPageLocators.OFFER_INFO),
-                                'salary': find(x, MainPageLocators.OFFER_SALARY),
-                                'status': find(x, MainPageLocators.OFFER_STATUS)
+                                # 'info': find(x, MainPageLocators.OFFER_INFO),
+                                # 'salary': find(x, MainPageLocators.OFFER_SALARY),
+                                # 'status': find(x, MainPageLocators.OFFER_STATUS)
                             }
                     if end_flag == 1:
                         break
