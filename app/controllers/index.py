@@ -24,7 +24,12 @@ def print_jobs():
 @bp.route('/add')
 def add_job():
     t = create_job(name='main_page_job', func=main_page_job, seconds=15)
-    return jsonify(data=f"Job {t.id} added. Execution scheduled time: {t.run_date}")
+    t1 = create_job(name='main_page_job', func=main_page_job, seconds=15)
+    s = [
+        f"Job {t.id} added. Execution scheduled time: {t.run_date}",
+        f"Job {t1.id} added. Execution scheduled time: {t1.run_date}"
+    ]
+    return jsonify(data=s)
 
 
 @bp.route('/pause')
