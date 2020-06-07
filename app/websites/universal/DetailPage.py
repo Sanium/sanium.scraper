@@ -105,8 +105,10 @@ class DetailPage:
 
         output = {}  # dane wyjściowe
         if self.debug: print("Wczytanie oferty [START : ", datetime.now(), ']')
-        WebDriverWait(self.driver, 15).until(EC.presence_of_element_located(self.locators.offer_title))
-
+        try:
+            WebDriverWait(self.driver, 15).until(EC.presence_of_element_located(self.locators.offer_title))
+        except TimeoutException:
+            return None
         title = self.driver.find_element(*self.locators.offer_title).text
         basic = find_list(self.driver, self.locators.offer_experience),
 

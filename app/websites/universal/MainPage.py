@@ -66,6 +66,7 @@ class MainPage:
         output = {}  # dane wyjściowe
         move_number = 0
         end_flag = 0
+        page = 1
         if self.list_type == "inf":
             while end_flag == 0:
                 attempts = 0
@@ -108,10 +109,13 @@ class MainPage:
                             break
                         else:
                             if self.main_page_dict['url'] in x.get_attribute("href").__str__():
-                                print(x.get_attribute("href").__str__())
+                                # print(x.get_attribute("href").__str__())
                                 output[x.get_attribute("href").__str__()] = {
                                     'title': find(x, self.locators.offer_title),
                                 }
+                    if len(elem) < n:
+                        page += 1
+                        self.driver.get(self.url+"?page="+page)
                     if end_flag == 1:
                         break
             self.offer_list = output

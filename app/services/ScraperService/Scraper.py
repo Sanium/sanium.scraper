@@ -68,19 +68,19 @@ class Scraper:
             custom_page = Universal_DetailPage.DetailPage(self.driver, target_id, self.service_struct["detail_page"],
                                                           debug=self.debug)
             detail_data = custom_page.get_data()
-
-        self.output[target_id] = {}
-        self.output[target_id]['title'] = detail_data[target_id]['title']
-        self.output[target_id]['salary'] = detail_data[target_id]['salary']
-        self.output[target_id]['salary_from'] = detail_data[target_id]['salary_from']
-        self.output[target_id]['salary_to'] = detail_data[target_id]['salary_to']
-        self.output[target_id]['currency'] = detail_data[target_id]['currency']
-        self.output[target_id]['street'] = detail_data[target_id]['street']
-        self.output[target_id]['city'] = detail_data[target_id]['city']
-        self.output[target_id]['employer'] = detail_data[target_id]['employer']
-        self.output[target_id]['experience'] = detail_data[target_id]['experience']
-        self.output[target_id]['employment'] = detail_data[target_id]['employment']
-        self.output[target_id]['description'] = detail_data[target_id]['description']
+        if detail_data is not None:
+            self.output[target_id] = {}
+            self.output[target_id]['title'] = detail_data[target_id]['title']
+            self.output[target_id]['salary'] = detail_data[target_id]['salary']
+            self.output[target_id]['salary_from'] = detail_data[target_id]['salary_from']
+            self.output[target_id]['salary_to'] = detail_data[target_id]['salary_to']
+            self.output[target_id]['currency'] = detail_data[target_id]['currency']
+            self.output[target_id]['street'] = detail_data[target_id]['street']
+            self.output[target_id]['city'] = detail_data[target_id]['city']
+            self.output[target_id]['employer'] = detail_data[target_id]['employer']
+            self.output[target_id]['experience'] = detail_data[target_id]['experience']
+            self.output[target_id]['employment'] = detail_data[target_id]['employment']
+            self.output[target_id]['description'] = detail_data[target_id]['description']
         if self.debug: print("Detail Page [END : ", datetime.now(), ']')
 
     def save_data(self):
