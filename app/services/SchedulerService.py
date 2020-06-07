@@ -37,5 +37,17 @@ def job_executed_listener(event):
     job.set_status(Job.DONE)
 
 
+def job_error_listener(event):
+    job = Job.find(event.job_id)
+    print(f"Listener: job {event.job_id} failed.")
+    job.set_status(Job.FAILED)
+
+
+def job_missed_listener(event):
+    job = Job.find(event.job_id)
+    print(f"Listener: job {event.job_id} missed.")
+    job.set_status(Job.MISSED)
+
+
 def test_job(*args, **kwargs):
     sleep(5)

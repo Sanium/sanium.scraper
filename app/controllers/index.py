@@ -23,12 +23,8 @@ def print_jobs():
 
 @bp.route('/add')
 def add_job():
-    t = create_job(name='main_page_job', func=main_page_job, seconds=15)
-    t1 = create_job(name='main_page_job', func=main_page_job, seconds=15)
-    s = [
-        f"Job {t.id} added. Execution scheduled time: {t.run_date}",
-        f"Job {t1.id} added. Execution scheduled time: {t1.run_date}"
-    ]
+    t = create_job(name='main_page_job', func=main_page_job, args=['https://justjoin.it/', 10], seconds=15)
+    s = f"Job {t.id} added. Execution scheduled time: {t.run_date}",
     return jsonify(data=s)
 
 

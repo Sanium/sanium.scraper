@@ -13,6 +13,8 @@ class Job(db.Model):
     SCHEDULED = 'scheduled'
     RUNNING = 'running'
     DONE = 'done'
+    FAILED = 'failed'
+    MISSED = 'missed'
 
     def __repr__(self):
         return f"<Job(id={self.id}, name={self.name}, status={self.status}, " \
