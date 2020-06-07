@@ -1,8 +1,8 @@
 from time import sleep
 
-from app.ScraperService.Scraper import Scraper
 from app.models.Job import Job
 from app.services.SchedulerService import create_job
+from .Scraper import Scraper
 
 
 def main_page_job(*args, **kwargs):
@@ -37,7 +37,8 @@ def main_page_job(*args, **kwargs):
     # TODO check
     for i in range(scraper.output.__len__()):
         offer_id = list(data.keys())[i]
-        detail: Job = create_job('detail_page_job', detail_page_job, args=[i, "https://justjoin.it/", offer_id], seconds=15)
+        detail: Job = create_job('detail_page_job', detail_page_job, args=[i, "https://justjoin.it/", offer_id],
+                                 seconds=15)
         print('detail run: ', detail.run_date)
 
 
@@ -56,7 +57,7 @@ def detail_page_job(*args, **kwargs):
     # TODO save result in db as Offer
 
     job_id = args[0]
-    j: Job = Job.find(job_id)
+    j: Job = Job.find_one(job_id)
     print(j.name, j.run_date)
     sleep(1)
     print('site id:', website)

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from app.services.SchedulerService import scheduler, create_job
-from app.ScraperService.__init__ import main_page_job
+from app.services.ScraperService import main_page_job
 from app.models.Job import Job
 
 bp = Blueprint('index', __name__)
@@ -50,4 +50,3 @@ def job(idx):
     if j is None:
         return jsonify(error="Not Found"), 404
     return jsonify(data=j.dict())
-

@@ -21,7 +21,7 @@ def safe_find_elem(parent, locator):
 
 
 class Scraper:
-    def __init__(self, website:str="", debug:bool=False, service_struct:dict ={}):
+    def __init__(self, website: str = "", debug: bool = False, service_struct: dict = None):
         self.service_struct = service_struct
         self.output = {}
         self.debug = debug
@@ -30,7 +30,8 @@ class Scraper:
         self.options.add_argument("-incognito")
         self.options.add_argument('headless')
         self.driver = webdriver.Chrome("./drivers/chromedriver", options=self.options)
-        if self.debug: print("Init [", datetime.now(), ']')
+        if self.debug:
+            print("Init [", datetime.now(), ']')
 
     def __del__(self):
         if self.debug: print("Fin [", datetime.now(), ']')
@@ -64,7 +65,8 @@ class Scraper:
             detail_page = Justjoin_DetailPage.DetailPage(self.driver, target_id, debug=self.debug)
             detail_data = detail_page.get_data()
         else:
-            custom_page = Universal_DetailPage.DetailPage(self.driver, target_id, self.service_struct["detail_page"], debug=self.debug)
+            custom_page = Universal_DetailPage.DetailPage(self.driver, target_id, self.service_struct["detail_page"],
+                                                          debug=self.debug)
             detail_data = custom_page.get_data()
 
         self.output[target_id] = {}

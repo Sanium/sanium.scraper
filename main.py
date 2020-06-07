@@ -1,4 +1,4 @@
-from app.ScraperService.Scraper import Scraper
+from app.services.ScraperService.Scraper import Scraper
 
 
 def main():
