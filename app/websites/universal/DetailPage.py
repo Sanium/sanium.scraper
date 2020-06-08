@@ -21,13 +21,19 @@ class DetailPageLocators:
 
     def __init__(self, locators_dict: dict):
         self.offer_title = (self.get_by(locators_dict["offer_title"]["by"]), locators_dict["offer_title"]["locator"])
-        self.offer_technology = (self.get_by(locators_dict["offer_technology"]["by"]), locators_dict["offer_technology"]["locator"])
+        self.offer_technology = (
+        self.get_by(locators_dict["offer_technology"]["by"]), locators_dict["offer_technology"]["locator"])
         self.offer_salary = (self.get_by(locators_dict["offer_salary"]["by"]), locators_dict["offer_salary"]["locator"])
-        self.offer_salary_currency = (self.get_by(locators_dict["offer_salary_currency"]["by"]), locators_dict["offer_salary_currency"]["locator"])
-        self.offer_location = (self.get_by(locators_dict["offer_location"]["by"]), locators_dict["offer_location"]["locator"])
-        self.offer_experience = (self.get_by(locators_dict["offer_experience"]["by"]), locators_dict["offer_experience"]["locator"])
-        self.offer_employment = (self.get_by(locators_dict["offer_employment"]["by"]), locators_dict["offer_employment"]["locator"])
-        self.offer_description = (self.get_by(locators_dict["offer_description"]["by"]), locators_dict["offer_description"]["locator"])
+        self.offer_salary_currency = (
+        self.get_by(locators_dict["offer_salary_currency"]["by"]), locators_dict["offer_salary_currency"]["locator"])
+        self.offer_location = (
+        self.get_by(locators_dict["offer_location"]["by"]), locators_dict["offer_location"]["locator"])
+        self.offer_experience = (
+        self.get_by(locators_dict["offer_experience"]["by"]), locators_dict["offer_experience"]["locator"])
+        self.offer_employment = (
+        self.get_by(locators_dict["offer_employment"]["by"]), locators_dict["offer_employment"]["locator"])
+        self.offer_description = (
+        self.get_by(locators_dict["offer_description"]["by"]), locators_dict["offer_description"]["locator"])
         self.company_logo = (self.get_by(locators_dict["company_logo"]["by"]), locators_dict["company_logo"]["locator"])
         self.company_name = (self.get_by(locators_dict["company_name"]["by"]), locators_dict["company_name"]["locator"])
 
@@ -81,6 +87,8 @@ class DetailPage:
             city = location[1]
             street = location[0]
             return {'city': city, 'street': street}
+        elif len(location[0]) > 0:
+            return {'city': location[0], 'street': None}
         else:
             return {'city': None, 'street': None}
 
@@ -106,15 +114,15 @@ class DetailPage:
         output = {}  # dane wyjściowe
         if self.debug: print("Wczytanie oferty [START : ", datetime.now(), ']')
         try:
-            WebDriverWait(self.driver, 15).until(EC.presence_of_element_located(self.locators.offer_title))
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.locators.offer_title))
         except TimeoutException:
             return None
         title = self.driver.find_element(*self.locators.offer_title).text
         basic = find_list(self.driver, self.locators.offer_experience),
 
         salary = find(self.driver, self.locators.offer_salary)
+        print(salary)
         salary = self.format_salary(salary)
-        currency = self.driver.find_element(*self.locators.offer_salary_currency).text
         employment = self.driver.find_element(*self.locators.offer_employment).text
         experience = self.driver.find_element(*self.locators.offer_experience).text
         location = find(self.driver, self.locators.offer_location)
@@ -125,12 +133,12 @@ class DetailPage:
             'salary': salary['salary'],
             'salary_from': salary['salary_from'] if salary['salary_from'] is not None else "",
             'salary_to': salary['salary_to'] if salary['salary_to'] is not None else "",
-            'currency': currency,
-            'street': location['street'],
-            'city': location['city'],
+            'currency': salary["currency"] if salary["currency"] is not None else "",
+            'street': location['street'] if location['street'] is not None else "",
+            'city': location['city'] if location['city'] is not None else "",
             'employer': find(self.driver, self.locators.company_name),
-            'experience': experience if experience is not None else "", #experience,
-            'employment': employment if employment is not None else "", #employment,
+            'experience': experience if experience is not None else "",
+            'employment': employment if employment is not None else "",
             'description': find(self.driver, self.locators.offer_description)
         }
         if self.debug: print("Wczytanie oferty [END : ", datetime.now(), ']')
