@@ -115,7 +115,7 @@ class MainPage:
                                 }
                     if len(elem) < n:
                         page += 1
-                        self.driver.get(self.url+"?page="+page)
+                        self.driver.get(self.url+"?page="+str(page))
                     if end_flag == 1:
                         break
             self.offer_list = output
