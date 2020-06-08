@@ -34,12 +34,12 @@ def main():
                 "locator": '//*[@id="job-offer"]/div[2]/div[2]/div[1]/div[3]/div[5]/div[2]/div[1]/span/span'
             },
             "offer_salary": {
-                "by": "xpath",
-                "locator": '//*[@id="job-sidebar"]/div[1]/div[1]'
+                "by": "class_name",
+                "locator": 'salary'
             },
             "offer_salary_currency": {
-                "by": "xpath",
-                "locator": '//*[@id="job-sidebar"]/div[1]/div[2]'
+                "by": "class_name",
+                "locator": 'units'
             },
             "offer_location": {
                 "by": "xpath",
@@ -68,13 +68,11 @@ def main():
         }
     }
     scraper = Scraper(service_struct=bulldog)
-    scraper.run_main_page_scrapping(20)
+    scraper.run_main_page_scrapping(30)
     print(scraper.output)
     s2 = Scraper(service_struct=bulldog)
     for k in list(scraper.get_data().keys()):
         s2.run_detail_page_scrapping(k)
-    # s2.run_detail_page_scrapping(list(scraper.get_data().keys())[1])
-    # s2.run_detail_page_scrapping(list(scraper.get_data().keys())[2])
     print(s2.output)
     # s2.save_data()
 
