@@ -120,13 +120,27 @@ class DetailPage:
         title = self.driver.find_element(*self.locators.offer_title).text
         basic = find_list(self.driver, self.locators.offer_experience),
 
-        salary = find(self.driver, self.locators.offer_salary)
-        print(salary)
-        salary = self.format_salary(salary)
-        employment = self.driver.find_element(*self.locators.offer_employment).text
-        experience = self.driver.find_element(*self.locators.offer_experience).text
-        location = find(self.driver, self.locators.offer_location)
-        location = self.format_location(location)
+        try:
+            salary = find(self.driver, self.locators.offer_salary)
+            salary = self.format_salary(salary)
+        except Exception:
+            salary = None
+
+        try:
+            employment = self.driver.find_element(*self.locators.offer_employment).text
+        except Exception:
+            employment = None
+
+        try:
+            experience = self.driver.find_element(*self.locators.offer_experience).text
+        except Exception:
+            experience = None
+
+        try:
+            location = find(self.driver, self.locators.offer_location)
+            location = self.format_location(location)
+        except Exception:
+            location = None
 
         output[self.url] = {
             'title': title,

@@ -8,10 +8,10 @@ class MainPageLocators:
     LIST_SCROLLBAR = (By.CLASS_NAME, 'css-110u7ph')
     LIST = (By.XPATH, '//*[@id="root"]/div[3]/div[1]/div/div[2]')
     OFFER = (By.TAG_NAME, 'a')
-    OFFER_TITLE = (By.CLASS_NAME, 'css-wjfk7i')
-    OFFER_INFO = (By.CLASS_NAME, 'css-jbk0sa')
-    OFFER_SALARY = (By.CLASS_NAME, 'css-1dotj4s')
-    OFFER_STATUS = (By.CLASS_NAME, 'css-hw5uoy')
+    OFFER_TITLE = (By.CLASS_NAME, 'css-18hez3m')  #to sie zmienia!
+    OFFER_INFO = (By.CLASS_NAME, 'css-ei5nx6')  #to sie zmienia!
+    OFFER_SALARY = (By.CLASS_NAME, 'css-16tql6o')  #to sie zmienia!
+    OFFER_STATUS = (By.CLASS_NAME, 'css-1gswfqu')  #to sie zmienia!
 
 
 class MainPage:

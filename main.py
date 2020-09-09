@@ -1,7 +1,7 @@
 from app.services.ScraperService.Scraper import Scraper
 
 
-def main():
+def run_buldog():
     bulldog = {
         "service_name": "bulldogjob.pl",
         "main_page": {
@@ -27,7 +27,7 @@ def main():
         "detail_page": {
             "offer_title": {
                 "by": "xpath",
-                "locator": '//*[@id="job-offer"]/div[2]/div[2]/div[1]/div[1]/div[2]/h1'
+                "locator": '//*[@id="job-offer"]/div[2]/div[1]/div/div[2]/div[2]/h1'
             },
             "offer_technology": {
                 "by": "xpath",
@@ -43,19 +43,19 @@ def main():
             },
             "offer_location": {
                 "by": "xpath",
-                "locator": '//*[@id="job-offer"]/div[2]/div[2]/div[1]/div[2]/div[2]/div[3]/span/span'
+                "locator": '//*[@id="job-offer"]/div[2]/div[1]/div/div[3]/div/div[3]/span/span'
             },
             "offer_experience": {
                 "by": "xpath",
-                "locator": '//*[@id="job-offer"]/div[2]/div[2]/div[1]/div[1]/div[3]/strong'
+                "locator": '//*[@id="job-offer"]/div[2]/div[1]/div/div[2]/div[3]/strong'
             },
             "offer_employment": {
                 "by": "xpath",
-                "locator": '//*[@id="job-offer"]/div[2]/div[2]/div[1]/div[2]/div[2]/div[2]/span/span[1]'
+                "locator": '//*[@id="job-offer"]/div[2]/div[1]/div/div[3]/div/div[2]/span/span'
             },
             "offer_description": {
                 "by": "xpath",
-                "locator": '//*[@id="job-offer"]/div[2]/div[2]/div[1]/div[3]/div[2]'
+                "locator": '//*[@id="job-offer"]/div[2]/div[2]/div[1]/div[1]/div[2]'
             },
             "company_logo": {
                 "by": "xpath",
@@ -68,7 +68,7 @@ def main():
         }
     }
     scraper = Scraper(service_struct=bulldog)
-    scraper.run_main_page_scrapping(30)
+    scraper.run_main_page_scrapping(10)
     print(scraper.output)
     s2 = Scraper(service_struct=bulldog)
     for k in list(scraper.get_data().keys()):
@@ -76,6 +76,18 @@ def main():
     print(s2.output)
     # s2.save_data()
 
+def run_jjit():
+    scraper = Scraper(website='https://justjoin.it/')
+    scraper.run_main_page_scrapping(10)
+    print(scraper.output)
+    s2 = Scraper(website='https://justjoin.it/')
+    for k in list(scraper.get_data().keys()):
+        s2.run_detail_page_scrapping(k)
+    print(s2.output)
+
+def main():
+    # run_jjit()
+    run_buldog()
 
 if __name__ == "__main__":
     main()

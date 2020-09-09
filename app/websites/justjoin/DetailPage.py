@@ -9,16 +9,16 @@ from selenium.common.exceptions import TimeoutException
 import re
 
 
-class DetailPageLocators:
-    OFFER_TITLE = (By.CLASS_NAME, 'css-1v15eia')
-    OFFER_SALARY = (By.CLASS_NAME, 'css-8cywu8')
-    OFFER_LOCATION = (By.CLASS_NAME, 'css-1d6wmgf')
-    COMPANY_LOGO = (By.CLASS_NAME, 'css-17jro83')
+class DetailPageLocators:  #to sie zmienia!
+    OFFER_TITLE = (By.CLASS_NAME, 'css-34e4ux')
+    OFFER_SALARY = (By.CLASS_NAME, 'css-1r1n80v')
+    OFFER_LOCATION = (By.CLASS_NAME, 'css-1ue58kn')
+    COMPANY_LOGO = (By.CLASS_NAME, 'css-f26ti0')
     COMPANY_NAME = (By.CLASS_NAME, 'css-l4opor')
     # TODO: inny typ lokalizacji dla exp i emp
     OFFER_EXPERIENCE = (By.CLASS_NAME, 'css-1ji7bvd')
     OFFER_EMPLOYMENT = (By.CLASS_NAME, 'css-1ji7bvd')
-    OFFER_DESCRIPTION = (By.CLASS_NAME, 'css-u2qsbz')
+    OFFER_DESCRIPTION = (By.CLASS_NAME, 'css-alatv1')
 
 
 class DetailPage:
