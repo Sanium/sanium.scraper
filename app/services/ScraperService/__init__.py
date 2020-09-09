@@ -41,7 +41,7 @@ def main_page_job(*args, **kwargs):
         detail: Job = create_job('detail_page_job', detail_page_job, args=["https://justjoin.it/", offer_id],
                                  seconds=seconds)
         print('detail run: ', detail.run_date)
-        seconds += 5
+        seconds += 60
         sleep(1)
 
 

@@ -1,13 +1,11 @@
 from selenium import webdriver
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.keys import Keys
-import time
 import json
 from datetime import datetime
 from app.websites.justjoin import MainPage as Justjoin_MainPage
 from app.websites.justjoin import DetailPage as Justjoin_DetailPage
 from app.websites.universal import MainPage as Universal_MainPage
 from app.websites.universal import DetailPage as Universal_DetailPage
+from app.models.Offer import Offer
 
 
 def safe_find_elem(parent, locator):
@@ -69,18 +67,27 @@ class Scraper:
                                                           debug=self.debug)
             detail_data = custom_page.get_data()
         if detail_data is not None:
-            self.output[target_id] = {}
-            self.output[target_id]['title'] = detail_data[target_id]['title']
-            self.output[target_id]['salary'] = detail_data[target_id]['salary']
-            self.output[target_id]['salary_from'] = detail_data[target_id]['salary_from']
-            self.output[target_id]['salary_to'] = detail_data[target_id]['salary_to']
-            self.output[target_id]['currency'] = detail_data[target_id]['currency']
-            self.output[target_id]['street'] = detail_data[target_id]['street']
-            self.output[target_id]['city'] = detail_data[target_id]['city']
-            self.output[target_id]['employer'] = detail_data[target_id]['employer']
-            self.output[target_id]['experience'] = detail_data[target_id]['experience']
-            self.output[target_id]['employment'] = detail_data[target_id]['employment']
-            self.output[target_id]['description'] = detail_data[target_id]['description']
+            Offer.create(
+                name=detail_data[target_id]['title'],
+                description=detail_data[target_id]['description'],
+                experience=detail_data[target_id]['experience'],
+                employment=detail_data[target_id]['employment'],
+                technology=None,
+                salary_from=detail_data[target_id]['salary_from'],
+                salary_to=detail_data[target_id]['salary_to'],
+                currency=detail_data[target_id]['currency'],
+                city=detail_data[target_id]['city'],
+                street=detail_data[target_id]['street'],
+                remote=None,
+                contact=None,
+                website=None,
+                created_at=datetime.now(),
+                updated_at=datetime.now(),
+                expired_on=None,
+                employer=detail_data[target_id]['employer'],
+                origin_url=None,
+
+            )
         if self.debug: print("Detail Page [END : ", datetime.now(), ']')
 
     def save_data(self):

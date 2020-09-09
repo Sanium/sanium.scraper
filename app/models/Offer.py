@@ -37,7 +37,7 @@ class Offer(db.Model):
 
     @staticmethod
     def create(**kwargs):
-        model = Offer(kwargs)
+        model = Offer(**kwargs)
         db.session.add(model)
         db.session.commit()
         return model
