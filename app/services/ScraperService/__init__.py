@@ -8,7 +8,7 @@ from .Scraper import Scraper
 def main_page_job(*args, **kwargs):
     """
     Job function of scraping main page. It will by executed if user schedule scraping.
-    args = [job_id, website, offers_count_number]
+    args = [job_id, website, offers_count_number, datasource]
     """
     print('*** main_page_job ***')
 
@@ -16,12 +16,13 @@ def main_page_job(*args, **kwargs):
     job_id = args[0]
     website = args[1]
     offers_count_number = args[2]
+    datasource = args[3]
 
     j: Job = Job.find(job_id)
 
     # init scraper
     print('initializing scraper')
-    scraper = Scraper(website)
+    scraper = Scraper(website=website, service_struct=datasource)
 
     # run scrapping on main page
     print('scraping')
@@ -38,8 +39,8 @@ def main_page_job(*args, **kwargs):
     seconds = 60
     for i in range(scraper.output.__len__()):
         offer_id = list(data.keys())[i]
-        detail: Job = create_job('detail_page_job', detail_page_job, args=["https://justjoin.it/", offer_id],
-                                 seconds=seconds)
+        detail: Job = create_job('detail_page_job', detail_page_job,
+                                 args=[datasource["service_name"], offer_id, datasource], seconds=seconds)
         print('detail run: ', detail.run_date)
         seconds += 60
         sleep(1)
@@ -48,15 +49,16 @@ def main_page_job(*args, **kwargs):
 def detail_page_job(*args, **kwargs):
     """
     Job function of scraping specified page with details about offer. It will be scheduled by main_page_job
-    args = [job_id, website, offer_id]
+    args = [job_id, website, offer_id, datasource]
     """
     print('*** detail_page_job ***', args)
     job_id = args[0]
     website = args[1]
     offer_id = args[2]
+    datasource = args[3]
 
     print('initializing scraper', job_id, website, offer_id)
-    scraper = Scraper(website, debug=True)
+    scraper = Scraper(website=website, service_struct=datasource)
 
     print('scraping')
     scraper.run_detail_page_scrapping(offer_id)

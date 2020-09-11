@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from app.services.SchedulerService import scheduler, create_job
 from app.services.ScraperService import main_page_job
 from app.models.Job import Job
@@ -21,9 +21,19 @@ def print_jobs():
     return jsonify(data=data)
 
 
-@bp.route('/add')
+@bp.route('/add', methods=['GET'])
 def add_job():
     t = create_job(name='main_page_job', func=main_page_job, args=['https://justjoin.it/', 10], seconds=15)
+    s = f"Job {t.id} added. Execution scheduled time: {t.run_date}",
+    return jsonify(data=s)
+
+
+@bp.route('/add', methods=['POST'])
+def add_custom_job():
+    if request.content_type.lower() != 'application/json':
+        return jsonify(error='Wrong Content-Type'), 415
+    data = request.get_json()
+    t = create_job(name='main_page_job', func=main_page_job, args=[data["service_name"], 10, data], seconds=15)
     s = f"Job {t.id} added. Execution scheduled time: {t.run_date}",
     return jsonify(data=s)
 
