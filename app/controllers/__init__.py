@@ -1,5 +1,5 @@
-from . import index
+from . import JobController
 
 
 def init_app(app):
-    app.register_blueprint(index.bp)
+    app.register_blueprint(JobController.bp)
