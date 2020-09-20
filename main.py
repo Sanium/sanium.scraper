@@ -90,4 +90,4 @@ def main():
     run_buldog()
 
 if __name__ == "__main__":
-    print("dupa")
+    print("blazej")
